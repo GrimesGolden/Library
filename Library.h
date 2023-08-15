@@ -71,3 +71,5 @@ private:
 };
 
 ostream& operator<<(ostream& os, const Book& k);
+bool operator==(const Book& a, const Book& b);
+bool operator!=(const Book& a, const Book& b);

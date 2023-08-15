@@ -160,6 +160,18 @@ ostream& operator<<(ostream& os, const Book& k) {
 	return os << "ISBN: " << k.ISBN() << "\n"  << "Title: " << k.title() << "\n" << "Author: " <<  k.author() << "\n" << "Copyright: " << k.date() << "\n";
 }
 
+bool operator==(const Book& a, const Book& b) {
+	return a.ISBN() == b.ISBN() &&
+		a.title() == b.title() &&
+		a.author() == b.author() &&
+		a.date() == b.date();
+}
+
+bool operator!=(const Book& a, const Book& b) {
+	return !(a == b);
+}
+
+
 
 
 
