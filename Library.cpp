@@ -155,4 +155,10 @@ void Book::valid_isbn(){
 	}
 }
 
+ostream& operator<<(ostream& os, const Book& k) {
+	// Overloading the <<, prints all data concisely formatted. 
+	os << "ISBN: " << k.ISBN << "\n"  << "Title: " << k.title << "\n" << "Author: " <<  k.author << "\n" << "Copyright: " << k.cr_date << "\n";
+	return os;
+}
+
 

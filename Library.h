@@ -51,6 +51,7 @@ namespace Chrono {
 class Book {
 public:
 	Book(string I, string t, string a, Chrono::Date d);
+	friend ostream& operator<<(ostream& os, const Book& k);
 private:
 	string ISBN;
 	string title;
