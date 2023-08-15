@@ -1,6 +1,7 @@
 #pragma once
 // file Chrono.h
 #include "std_lib_facilities.h"
+#include <cctype>
 
 // Date class
 namespace Chrono {
@@ -55,4 +56,6 @@ private:
 	string title;
 	string author;
 	Chrono::Date cr_date;
+
+	void valid_isbn();
 };
