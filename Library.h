@@ -51,12 +51,23 @@ namespace Chrono {
 class Book {
 public:
 	Book(string I, string t, string a, Chrono::Date d);
-	friend ostream& operator<<(ostream& os, const Book& k);
+	//friend ostream& operator<<(ostream& os, const Book& k);
+
+	//modifying operations;
+
+	//non modifying operations
+	string ISBN() const { return I; }
+	string title() const { return t; }
+	string author() const { return a;  }
+	Chrono::Date date() const { return d; }
+
 private:
-	string ISBN;
-	string title;
-	string author;
-	Chrono::Date cr_date;
+	string I;
+	string t;
+	string a;
+	Chrono::Date d;
 
 	void valid_isbn();
 };
+
+ostream& operator<<(ostream& os, const Book& k);

@@ -133,9 +133,9 @@ namespace Chrono {
 
 } // chrono
 
-Book::Book(string I, string t, string a, Chrono::Date d)
+Book::Book(string IS, string title, string author, Chrono::Date cd)
 // Stores a book with formatted ISBN, title, author and an object of Date class. 
-	: ISBN{ I }, title{ t }, author{ a }, cr_date{ d } {
+	: I{ IS }, t{ title }, a{ author }, d{ cd } {
 	//Is the ISBN valid?
 	valid_isbn();
 	// Then print message, we intialize object. 
@@ -144,12 +144,12 @@ Book::Book(string I, string t, string a, Chrono::Date d)
 
 void Book::valid_isbn(){
 	// Throw error if ISBN does not match format.
-	if (ISBN.size() != 4) {
+	if (I.size() != 4) {
 		error("Invalid ISBN, format must be n-n-n-x, n is an integer, x is letter or int");
 	}
 
 	for (int i = 0; i <= 2; ++i) {
-		if (isdigit(ISBN[i]) == 0) {
+		if (isdigit(I[i]) == 0) {
 			error("Invalid ISBN, format must be n-n-n-x, n is an integer, x is letter or int");
 		}
 	}
@@ -157,8 +157,9 @@ void Book::valid_isbn(){
 
 ostream& operator<<(ostream& os, const Book& k) {
 	// Overloading the <<, prints all data concisely formatted. 
-	os << "ISBN: " << k.ISBN << "\n"  << "Title: " << k.title << "\n" << "Author: " <<  k.author << "\n" << "Copyright: " << k.cr_date << "\n";
-	return os;
+	return os << "ISBN: " << k.ISBN() << "\n"  << "Title: " << k.title() << "\n" << "Author: " <<  k.author() << "\n" << "Copyright: " << k.date() << "\n";
 }
+
+
 
 
