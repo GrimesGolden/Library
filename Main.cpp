@@ -13,4 +13,7 @@ int main() {
 	else {
 		cout << "not equal\n";
 	}
+
+	Patron jordan{ "Jordan", "1234567", 0.00 };
+	jordan.status();
 }

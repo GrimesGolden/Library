@@ -78,6 +78,26 @@ private:
 	void valid_isbn();
 };
 
+class Patron {
+public:
+	Patron(string n, string cn, double f);
+
+	// non modifying function
+	string name() const { return n; }
+	string card_numb() const { return cn; }
+	double fees() const { return f; }
+	void status();
+
+	// modifying
+	void set_fee(double fee);
+private:
+	string n; //name
+	string cn; //card number
+	double f = 0.00; // fees
+	void valid_card();
+	bool owes_fee();
+};
+
 ostream& operator<<(ostream& os, const Book& k);
 bool operator==(const Book& a, const Book& b);
 bool operator!=(const Book& a, const Book& b);

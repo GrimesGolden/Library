@@ -199,6 +199,52 @@ bool operator!=(const Book& a, const Book& b) {
 	return !(a == b);
 }
 
+Patron::Patron(string name, string card, double fee)
+	: n{ name }, cn{ card }, f{ fee } {
+	valid_card();
+
+	cout << "Welcome to the library, " << name << ".\n";
+}
+
+void Patron::valid_card() {
+	// Throw error if ISBN does not match format.
+	if (cn.size() != 7) {
+		error("Invalid card number, format must be 7 digits, please leave the library now!");
+	}
+
+	for (int i = 0; i < cn.size(); ++i) {
+		if (isdigit(cn[i]) == 0) {
+			error("Invalid card number, format must be 7 digits, please leave the library now!");
+		}
+	}
+}
+
+void Patron::set_fee(double fee) {
+	f = fee;
+}
+
+bool Patron::owes_fee() {
+	if (f > 0.00) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Patron::status() {
+	cout << "Patron Name: " << n << "\n";
+
+	if (owes_fee()) {
+		cout << "Owes: $" << f << " in library fees.\n";
+	}
+	else {
+		cout << "Has no outstanding fees.\n";
+	}
+
+	cout << "Card #:" << cn << "\n";
+}
+
 
 
 
