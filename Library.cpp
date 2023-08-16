@@ -133,9 +133,11 @@ namespace Chrono {
 
 } // chrono
 
-Book::Book(string IS, string title, string author, Chrono::Date cd)
+// Start the library.
+
+Book::Book(string IS, string title, string author, Genre genre, Chrono::Date cd)
 // Stores a book with formatted ISBN, title, author and an object of Date class. 
-	: I{ IS }, t{ title }, a{ author }, d{ cd } {
+	: I{ IS }, t{ title }, a{ author }, g{ genre }, d { cd } {
 	//Is the ISBN valid?
 	valid_isbn();
 	// Then print message, we intialize object. 
@@ -155,15 +157,41 @@ void Book::valid_isbn(){
 	}
 }
 
+string Book::genre_tostr() const {
+	// Returns the string version of the enumerated Genre.
+	switch (g)
+	{
+	case Genre::fiction:
+		return "fiction";
+		break;
+	case Genre::nonfiction:
+		return "non-fiction";
+		break;
+	case Genre::periodical:
+		return "periodical";
+		break;
+	case Genre::biography:
+		return "biography";
+		break;
+	case Genre::children:
+		return "children";
+		break;
+	default:
+		return "";
+		break;
+	}
+}
+
 ostream& operator<<(ostream& os, const Book& k) {
 	// Overloading the <<, prints all data concisely formatted. 
-	return os << "ISBN: " << k.ISBN() << "\n"  << "Title: " << k.title() << "\n" << "Author: " <<  k.author() << "\n" << "Copyright: " << k.date() << "\n";
+	return os << "ISBN: " << k.ISBN() << "\n"  << "Title: " << k.title() << "\n" << "Author: " <<  k.author() << "\n" << "Genre: " << k.genre_tostr() << "\n" << "Copyright: " << k.date() << "\n";
 }
 
 bool operator==(const Book& a, const Book& b) {
 	return a.ISBN() == b.ISBN() &&
 		a.title() == b.title() &&
 		a.author() == b.author() &&
+		a.genre() == b.genre() &&
 		a.date() == b.date();
 }
 

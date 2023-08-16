@@ -48,9 +48,13 @@ namespace Chrono {
 } // Chrono
 
 // Start book class
+enum class Genre {
+	fiction, nonfiction, periodical, biography, children
+};
+
 class Book {
 public:
-	Book(string I, string t, string a, Chrono::Date d);
+	Book(string I, string t, string a, Genre g, Chrono::Date d);
 	//friend ostream& operator<<(ostream& os, const Book& k);
 
 	//modifying operations;
@@ -59,6 +63,8 @@ public:
 	string ISBN() const { return I; }
 	string title() const { return t; }
 	string author() const { return a;  }
+	Genre genre() const { return g; }
+	string genre_tostr() const;
 	Chrono::Date date() const { return d; }
 
 private:
@@ -66,6 +72,8 @@ private:
 	string t;
 	string a;
 	Chrono::Date d;
+	Genre g;
+	
 
 	void valid_isbn();
 };
