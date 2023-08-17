@@ -1,4 +1,3 @@
-// Chrono.cpp
 #include "Library.h"  
 
 namespace Chrono {
@@ -131,7 +130,7 @@ namespace Chrono {
 		return d;
 	}
 
-} // chrono
+} // chrono. End Date class and Chrono namespace. 
 
 // Start the library.
 
@@ -146,10 +145,12 @@ Book::Book(string IS, string title, string author, Genre genre, Chrono::Date cd)
 
 void Book::valid_isbn(){
 	// Throw error if ISBN does not match format.
+	// Verify the ISBN is 4 characters. 
 	if (I.size() != 4) {
 		error("Invalid ISBN, format must be n-n-n-x, n is an integer, x is letter or int");
 	}
 
+	// Verify the first 3 characters are digits. 
 	for (int i = 0; i <= 2; ++i) {
 		if (isdigit(I[i]) == 0) {
 			error("Invalid ISBN, format must be n-n-n-x, n is an integer, x is letter or int");
@@ -159,6 +160,7 @@ void Book::valid_isbn(){
 
 string Book::genre_tostr() const {
 	// Returns the string version of the enumerated Genre.
+	// A number isn't much help here, is it Bjarne? 
 	switch (g)
 	{
 	case Genre::fiction:
@@ -182,7 +184,7 @@ string Book::genre_tostr() const {
 	}
 }
 
-// Operator overloading...
+// Various operator overloading for Patron and Book class.
 
 ostream& operator<<(ostream& os, const Book& k) {
 	// Overloading the <<, prints all data concisely formatted. 
@@ -206,6 +208,8 @@ bool operator!=(const Book& a, const Book& b) {
 }
 
 Patron::Patron(string name, string card, double fee)
+// Initalize a Patron. 
+// This class represents someone simply entering the library, but not yet registering. 
 	: n{ name }, cn{ card }, f{ fee } {
 	valid_card();
 
@@ -213,7 +217,8 @@ Patron::Patron(string name, string card, double fee)
 }
 
 void Patron::valid_card() {
-	// Throw error if ISBN does not match format.
+	// Confirm a users library card number matches Bjarnes specified format.
+	// Throw error() if ISBN does not match format.
 	if (cn.size() != 7) {
 		error("Invalid card number, format must be 7 digits, please leave the library now!");
 	}
@@ -226,10 +231,12 @@ void Patron::valid_card() {
 }
 
 void Patron::set_fee(double fee) {
+	// A setter for fee.
 	f = fee;
 }
 
 bool Patron::owes_fee() {
+	// Helper function for Patron, return a bool if Patron owes a fee to library. 
 	if (f > 0.00) {
 		return true;
 	}
@@ -239,6 +246,7 @@ bool Patron::owes_fee() {
 }
 
 void Patron::status() {
+	// Prints various status reports on Patron object, such as name, fees owed and card number.
 	cout << "Patron Name: " << n << "\n";
 
 	if (owes_fee()) {
@@ -252,13 +260,18 @@ void Patron::status() {
 }
 
 Transaction::Transaction(Book b, Patron p, Chrono::Date d)
+// Represents a transaction, that is...
+// A Patron object, checksout() a Book object, on a specified Date object
 	:book{b}, patron{p}, date{d} {}
 
 void  Library::add_book(const Book& b) { 
+	// Add an already existing book to the library.
 	books.push_back(b);
 	cout << b.title() << " added successfully\n";
 }
 void Library::add_patron(const Patron& p) {
+	// Represents registering a patron into the library system.
+	// That is, recieving a library card.
 
 	for (Patron patron : patrons) {
 		// A user with the same card number cannot be added to the library.
@@ -271,6 +284,7 @@ void Library::add_patron(const Patron& p) {
 }
 
 void Library::check_patron(const Patron& p) {
+	// Verify that the patron is able to check out a book. 
 
 	for (Patron patron : patrons) {
 		// utilize the card number, to verify if patron is the same. 
@@ -281,10 +295,12 @@ void Library::check_patron(const Patron& p) {
 		}
 		
 	}
+	// We would have returned by now if it was...
 	error("Error: patron's card number is not in the system");
 }
 
 void Library::check_book(const Book& b) {
+	// Verify that this book is in the library and can be checked out. 
 	
 	for (Book book : books) {
 		if (book == b) {
@@ -314,12 +330,12 @@ void Library::check_out(const Book& b, const Patron& p, const Chrono::Date& d) {
 	Transaction t{ b, p, d };
 	transactions.push_back(t);
 
-	// Also write a function that will return a vector that contains the names of all Patrons who owe a fee. 
-
+	// Print confirmation message with core info. 
 	cout << b.title() << " checked out by " << p.name() << " on " << d << " succesfully.\n";
 }
 
 vector<Patron> Library::debtors() {
+	//Write a function that will return a vector that contains the names of all Patrons who owe a fee. 
 
 	vector<Patron> debtors;
 
@@ -332,7 +348,18 @@ vector<Patron> Library::debtors() {
 	return debtors;
 }
 
+/*Notes: Most all of the functionality works on constant references, I suppose that makes sense in theory. 
+A Patron checking out a book object from the library should not be able to modify a book in any way. 
+But a gut instinct tells me this could cause problems down the line, for example...
+What if a user needs to modify the date that a book was checked out or there was some mistake.
+There is no room for modification, but I suppose in essence this is a good thing.
 
+Yes there is far more room for functionality here, example, can we see all the books in the library like a catalogue.
+I should be able to create a vector books and push them all to the library, by reading them in from user input. That would be nice
+The whole user input needs to be cleaned up to make it like an actual library, and of course there is no GUI.
+But other than that the basics are here. It demonstrates the power of OOP in C++
+
+See exercise 9 on page 340 of PPP 2nd edition.*/
 
 
 

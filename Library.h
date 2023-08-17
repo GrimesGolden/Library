@@ -87,7 +87,7 @@ public:
 	double fees() const { return f; }
 	void status();
 
-	// modifying
+	//modifying
 	void set_fee(double fee);
 private:
 	string n; //name
