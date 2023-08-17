@@ -117,7 +117,10 @@ class Library {
 public:
 	void add_book(const Book& b);
 	void add_patron(const Patron& p);
-	void check_out(const Book& b);
+	void check_out(const Book& b, const Patron& p);
+private: 
+	void check_patron(const Patron& p);
+	void check_book(const Book& b);
 
 	
 };

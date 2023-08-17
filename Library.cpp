@@ -182,6 +182,8 @@ string Book::genre_tostr() const {
 	}
 }
 
+// Operator overloading...
+
 ostream& operator<<(ostream& os, const Book& k) {
 	// Overloading the <<, prints all data concisely formatted. 
 	return os << "ISBN: " << k.ISBN() << "\n"  << "Title: " << k.title() << "\n" << "Author: " <<  k.author() << "\n" << "Genre: " << k.genre_tostr() << "\n" << "Copyright: " << k.date() << "\n";
@@ -193,6 +195,10 @@ bool operator==(const Book& a, const Book& b) {
 		a.author() == b.author() &&
 		a.genre() == b.genre() &&
 		a.date() == b.date();
+}
+
+bool operator==(const Patron& a, const Patron& b) {
+	return a.card_numb() == b.card_numb();
 }
 
 bool operator!=(const Book& a, const Book& b) {
@@ -254,8 +260,39 @@ void Library::add_patron(const Patron& p) {
 	cout << p.name() << " added successfully\n";
 }
 
-void Library::check_out(const Book& b) {
-	remove(books.begin(), books.end(), b);
+void Library::check_patron(const Patron& p) {
+
+	for (Patron patron : patrons) {
+		// utilize the card number, to verify if patron is the same. 
+		// This also means all library card numbers must be unique. 
+		if (patron == p) {
+			patrons.erase(remove(patrons.begin(), patrons.end(), p));
+			return;
+		}
+		
+	}
+	error("Error: patron's card number is not in the system");
+}
+
+void Library::check_book(const Book& b) {
+	
+	for (Book book : books) {
+		if (book == b) {
+			books.erase(remove(books.begin(), books.end(), b));
+			return;
+		}
+	}
+	error("Error: this book is not in the library system");
+
+}
+
+void Library::check_out(const Book& b, const Patron& p) {
+
+	
+	check_book(b);
+	check_patron(p);
+
+	cout << b.title() << " checked out by " << p.name() << " succesfully.\n";
 }
 
 

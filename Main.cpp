@@ -23,4 +23,6 @@ int main() {
 	library.add_book(Alice);
 	library.add_book(ATLG);
 	library.add_patron(jordan);
+
+	library.check_out(Alice, jordan);
 }
