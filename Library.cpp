@@ -245,6 +245,19 @@ void Patron::status() {
 	cout << "Card #:" << cn << "\n";
 }
 
+void  Library::add_book(const Book& b) { 
+	books.push_back(b);
+	cout << b.title() << " added successfully\n";
+}
+void Library::add_patron(const Patron& p) {
+	patrons.push_back(p);
+	cout << p.name() << " added successfully\n";
+}
+
+void Library::check_out(const Book& b) {
+	remove(books.begin(), books.end(), b);
+}
+
 
 
 

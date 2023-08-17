@@ -101,3 +101,23 @@ private:
 ostream& operator<<(ostream& os, const Book& k);
 bool operator==(const Book& a, const Book& b);
 bool operator!=(const Book& a, const Book& b);
+
+struct Transaction {
+	Book book;
+	Patron patron;
+	Chrono::Date date;
+};
+
+class Library {
+
+	vector<Book> books;
+	vector<Patron> patrons;
+	vector<Transaction> transactions;
+
+public:
+	void add_book(const Book& b);
+	void add_patron(const Patron& p);
+	void check_out(const Book& b);
+
+	
+};
