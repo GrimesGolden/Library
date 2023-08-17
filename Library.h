@@ -45,8 +45,8 @@ namespace Chrono {
 	//Day day_of_week(const Date& d); // day of week of d
 	Date next_Sunday(const Date& d);
 	Date next_weekday(const Date& d);
-} // Chrono
-
+} // Chrono. End date class and Chrono namespace
+//*********************************************************************************************
 // Start book class
 enum class Genre {
 	fiction, nonfiction, periodical, biography, children
@@ -55,7 +55,6 @@ enum class Genre {
 class Book {
 public:
 	Book(string I, string t, string a, Genre g, Chrono::Date d);
-	//friend ostream& operator<<(ostream& os, const Book& k);
 
 	//modifying operations;
 
@@ -106,6 +105,9 @@ struct Transaction {
 	Book book;
 	Patron patron;
 	Chrono::Date date;
+
+public:
+	Transaction(Book b, Patron p, Chrono::Date d);
 };
 
 class Library {
@@ -117,10 +119,12 @@ class Library {
 public:
 	void add_book(const Book& b);
 	void add_patron(const Patron& p);
-	void check_out(const Book& b, const Patron& p);
+	void check_out(const Book& b, const Patron& p, const Chrono::Date& d);
+	vector<Patron> debtors();
 private: 
 	void check_patron(const Patron& p);
 	void check_book(const Book& b);
+
 
 	
 };

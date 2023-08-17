@@ -251,13 +251,23 @@ void Patron::status() {
 	cout << "Card #:" << cn << "\n";
 }
 
+Transaction::Transaction(Book b, Patron p, Chrono::Date d)
+	:book{b}, patron{p}, date{d} {}
+
 void  Library::add_book(const Book& b) { 
 	books.push_back(b);
 	cout << b.title() << " added successfully\n";
 }
 void Library::add_patron(const Patron& p) {
+
+	for (Patron patron : patrons) {
+		// A user with the same card number cannot be added to the library.
+		if (patron == p) {
+			error("This card number is already in the system.");
+		}
+	}
 	patrons.push_back(p);
-	cout << p.name() << " added successfully\n";
+	cout << p.name() << " registered successfully\n";
 }
 
 void Library::check_patron(const Patron& p) {
@@ -286,13 +296,40 @@ void Library::check_book(const Book& b) {
 
 }
 
-void Library::check_out(const Book& b, const Patron& p) {
+void Library::check_out(const Book& b, const Patron& p, const Chrono::Date& d) {
 
-	
+	// Whenever a user check out a book.
+	// Have the library make sure that both the user and the book are in the library.
+
 	check_book(b);
 	check_patron(p);
+	// If they aren't report an error.
 
-	cout << b.title() << " checked out by " << p.name() << " succesfully.\n";
+	// Then check to make sure that the user owes no fees. If the user does report an error.
+	if (p.fees() > 0) {
+		error(p.name() + " owes money to the library");
+	}
+
+	// If not create a Transaction, and place it in the vector of Transactions.
+	Transaction t{ b, p, d };
+	transactions.push_back(t);
+
+	// Also write a function that will return a vector that contains the names of all Patrons who owe a fee. 
+
+	cout << b.title() << " checked out by " << p.name() << " on " << d << " succesfully.\n";
+}
+
+vector<Patron> Library::debtors() {
+
+	vector<Patron> debtors;
+
+	for (Patron p : patrons) {
+		if (p.fees() > 0) {
+			debtors.push_back(p);
+		}
+	}
+
+	return debtors;
 }
 
 
